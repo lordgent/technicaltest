@@ -1,17 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Apps from './App';
+import { BrowserRouter } from 'react-router-dom';
+import {Provider} from 'react-redux'
+import RootReducers from './store'
+import {createStore, applyMiddleware, compose} from 'redux'
+import thunk from 'redux-thunk';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const App = () => {
+    const store = createStore(RootReducers, compose(applyMiddleware(thunk)));
+  return (
+      <Provider store={store}>
+          <BrowserRouter>
+              <Apps/>
+          </BrowserRouter>
+      </Provider>
+  )
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const root = ReactDOM.createRoot(document.getElementById("root"))
+root.render(<App/>)
