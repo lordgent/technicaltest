@@ -5,7 +5,7 @@ const Layout = ({children}) => {
   return (
   <>
   <NavbarComp/>
-  <div className='flex'>
+  <div className='flex h-screen'>
       <SideBar/>
       <div className='w-full px-2'>
         {children}

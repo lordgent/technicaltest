@@ -11,11 +11,11 @@ const MoviesViews = () => {
   const { Movies, MovieLoading } = useSelector((state) => state.moviesReducer);
   const handleClick = () => {
     setpage(page + 1)
-    dispatch(actionGetMovie(page));
+    dispatch(actionGetMovie({page}));
   }
 
   const handleMin = React.useCallback(() => {
-    if(page === 1) {
+    if(page === 1 ) {
       setpage(1)
       return
     }
@@ -23,7 +23,9 @@ const MoviesViews = () => {
   },[page]);
 
     React.useEffect(() => {
-      dispatch(actionGetMovie(page));
+      if(page < 16) {
+        dispatch(actionGetMovie(page));
+      }
     }, [dispatch, page]);
 
     React.useEffect(() =>{
@@ -31,17 +33,19 @@ const MoviesViews = () => {
         setListMovies(Movies)
       }
     },[Movies])
-  console.log(Movies);
+    React.useEffect(() => {
+      if (handleClick) {
+        dispatch(actionGetMovie(page));
+      }
+    }, [page]);
   return (
   <Layout>
-    <div className='px-2'>
     <p className='text-red-500 font-bold text-[20px]'>List Movies</p>
     {MovieLoading ? 
-    ''
+    'loading'
     :
     <TabelMovies data={listMovies} handleClick={handleClick} handleMin={handleMin} page={page}/>  
   }
-    </div>  
   </Layout>
   )
 }

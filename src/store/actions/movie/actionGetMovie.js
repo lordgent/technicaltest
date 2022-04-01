@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 
- const actionGetMovie = ({page}) => {
-   console.log(page);
+ const actionGetMovie = (pages) => {
+   
   return (dispatch) => {
     dispatch({
       type: "GET_MOVIES",
@@ -13,7 +13,7 @@ const axios = require('axios').default;
     });
     async function getMovies() {
       try {
-        const response = await axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=2fccde01a371b106b09a241d6d1d5b49&page=${page}`);
+        const response = await axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=2fccde01a371b106b09a241d6d1d5b49&page=${pages}`);
         dispatch({
           type: "GET_MOVIES",
           payload: {
